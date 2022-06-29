@@ -3,7 +3,7 @@ from pyarabic.araby import strip_tashkeel, strip_diacritics, strip_tatweel
 from string import punctuation
 
 def clean_word(word):
-
+      
   arabic_punctuations = '''`÷×؛<>_()*&^%][ـ،/:"؟.,'{}~¦+|!”…“–ـ'''
   english_punctuations = punctuation
   punctuations_list = arabic_punctuations + english_punctuations
@@ -11,7 +11,7 @@ def clean_word(word):
   search  = ["أ", "إ", "آ", "ة", " ", "-", "/", ".", "،", " و ", " يا ",
             '"', "ـ", "'", "ى", "\\", '\n', '\t', '&quot;', '?', '؟', '!', '»', '«']
   replace = ["ا", "ا", "ا", "ه", " ", " ", "", "", "", " و", " يا",
-             "", "", "", "ي", "", ' ', ' ', ' ', ' ? ', ' ؟ ', ' ! ', '', '']
+            "", "", "", "ي", "", ' ', ' ', ' ', ' ? ', ' ؟ ', ' ! ', '', '']
   
   word = strip_tashkeel(word)
   word = strip_diacritics(word)

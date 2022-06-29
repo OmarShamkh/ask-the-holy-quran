@@ -4,8 +4,8 @@ from .helpers import get_stopwords
 from .preprocess import clean_word, get_quran_clean_text
 
 model_ksucca = KeyedVectors.load("./references/model.pkl")
-# model_tw = Word2Vec.load('./references/full_grams_cbow_100_twitter.mdl')
-# model_wiki = Word2Vec.load('./references/full_grams_cbow_300_wiki.mdl')
+model_tw = Word2Vec.load('./references/full_grams_cbow_100_twitter.mdl')
+model_wiki = Word2Vec.load('./references/full_grams_cbow_300_wiki.mdl')
 
 stopwords = get_stopwords()
 quran_clean_text = get_quran_clean_text()
@@ -71,23 +71,23 @@ def get_avg_score(query_word, verse_text, model):
   return avg
 
 def get_most_similar_verses(query_word, model, method, model_number):
-	'''
-	Get the most similar verses to the query word based on the 3 methods(max_score , freq , avg)
-	'''
-	if query_word in stopwords:
-	  return "من فضلك، أدخل كلامًا ذا معنى"
+    '''
+    Get the most similar verses to the query word based on the 3 methods(max_score , freq , avg)
+    '''
+    if query_word in stopwords:
+      return "من فضلك، أدخل كلامًا ذا معنى"
 
-	verse_scores, index = [], 0
-	for verse in quran_clean_text:
-	  score = method(clean_word(query_word), verse, model)
-	  verse_scores.append((score, index))
-	  index += 1
-	  
-	verse_scores.sort(reverse=True)
-	
-	# TODO: check max length of verses_scores
-	most_similar_verses = [(score, quran_clean_text[index]) for score, index in verse_scores[:10]]
-	return most_similar_verses
+    verse_scores, index = [], 0
+    for verse in quran_clean_text:
+      score = method(clean_word(query_word), verse, model)
+      verse_scores.append((score, index))
+      index += 1
+      
+    verse_scores.sort(reverse=True)
+    
+    # TODO: check max length of verses_scores
+    most_similar_verses = [(score, quran_clean_text[index]) for score, index in verse_scores[:10]]
+    return most_similar_verses
 
 def get_most_similar_verses_by_query_text(query_text, model, method):
   # better than the split method
