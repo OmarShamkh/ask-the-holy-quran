@@ -1,0 +1,22 @@
+<table class="table "  >
+    
+    <thead>
+        
+    </thead>
+    
+    <div class="space" > <%= @counter %> of Results</div>
+    <tbody  class="aya" >
+        <% @ayas.each do |aya| %>
+            <tr>
+                <% if aya.text != nil %>
+                    <div class="aya"><td > <%=   aya.text  %><a href="#" class='suraLink'>link</a></td></div>
+                <% end %>
+            </tr>
+        <% end %>
+
+    </tbody>
+    
+</table>
+<div class="button">
+    <%== pagy_bootstrap_nav(@pagy) %>
+</div>

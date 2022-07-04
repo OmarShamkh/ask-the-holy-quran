@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Ayas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Content</th>
+      <th>Number</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ayas.each do |aya| %>
+      <tr>
+        <td><%= aya.content %></td>
+        <td><%= aya.number %></td>
+        <td><%= link_to 'Show', aya %></td>
+        <td><%= link_to 'Edit', edit_aya_path(aya) %></td>
+        <td><%= link_to 'Destroy', aya, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Aya', new_aya_path %>
