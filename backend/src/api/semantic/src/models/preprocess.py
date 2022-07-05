@@ -3,7 +3,20 @@ from pyarabic.araby import strip_tashkeel, strip_diacritics, strip_tatweel
 from string import punctuation
 
 def clean_word(word):
-      
+  '''
+  Get the clean word from the given word, according to the following rules.
+  1. Remove tashkeel
+  2. Remove diacritics
+  3. Remove punctuation
+  4. Remove tatweel
+
+  @param word: the word to clean
+  @type word: str
+  @return: the clean word
+  @rtype: str
+  '''
+
+
   arabic_punctuations = '''`÷×؛<>_()*&^%][ـ،/:"؟.,'{}~¦+|!”…“–ـ'''
   english_punctuations = punctuation
   punctuations_list = arabic_punctuations + english_punctuations
@@ -33,6 +46,13 @@ def clean_word(word):
   return word
   
 def get_quran_clean_text():
+  '''
+  Get the clean text from quran text, according to the above rules.
+
+  @return: the clean text
+  @rtype: list of strings
+  '''
+
   # prepare/read Quran data
   quran_clean_text = open("./data/external/quran-simple-clean.txt").readlines()
   
