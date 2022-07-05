@@ -1,62 +1,103 @@
 from .preprocess import clean_word, get_quran_clean_text
+from pyarabic.araby import tokenize
 import numpy as np
 
 quran_clean_text = get_quran_clean_text()
 
 
-def get_max_pooling_vec(tokens, model_vectors):
+def get_max_pooling_vec(query_text, model):
+    '''
+    Get the max pooling vector for the given tokens.
+
+    @param query_text: list of words
+    @type query_text: list
+    @param model: the model to use
+    @type model: Word2Vec or KeyedVectors
+    @return: max pooling vector
+    @rtype: numpy array
+    '''
+
+    # Warning: checkout the shape of the vectors
     arr = [-1e9 for idx in range(100)]
-    max_pooling_vec = np.copy(np.array(arr))  # avoid read-only error
+    # Avoid read-only error
+    max_pooling_vec = np.copy(np.array(arr))
 
-    for token in tokens:
-        if clean_word(token) not in model_vectors:
-            # print(clean_word(token))
+    for query_word in query_text:
+        if query_word not in model:
             continue
-
-        vec = model_vectors[clean_word(token)]
-        for idx in range(100):
-            max_pooling_vec[idx] = max(max_pooling_vec[idx], vec[idx])
+        model_vec = model[query_word]
+        for index in range(100):
+            max_pooling_vec[index] = max(
+                max_pooling_vec[index], model_vec[index])
 
     return max_pooling_vec
 
 
-def get_avg_pooling_vec(tokens, model_vectors):
+def get_avg_pooling_vec(query_text, model):
+    '''
+    Get the average pooling vector for the given tokens.
+
+    @param query_text: list of words
+    @type query_text: list
+    @param model: the model to use
+    @type model: Word2Vec or KeyedVectors
+    @return: average pooling vector
+    @rtype: numpy array
+    '''
+
+    # Warning: checkout the shape of the vectors
     arr = [0 for idx in range(100)]
-    avg_pooling_vec = np.copy(np.array(arr))  # avoid read-only error
+    # Avoid read-only error
+    avg_pooling_vec = np.copy(np.array(arr))
 
-    for token in tokens:
-        if clean_word(token) not in model_vectors:
+    for query_word in query_text:
+        if query_word not in model:
             continue
+        model_vec = model[query_word]
+        for index in range(100):
+            avg_pooling_vec[index] += model_vec[index]
 
-        vec = model_vectors[clean_word(token)]
-        for idx in range(100):
-            avg_pooling_vec[idx] += vec[idx]
-
-    for idx in range(100):
-        avg_pooling_vec[idx] /= len(tokens)
+    for index in range(100):
+        avg_pooling_vec[index] /= len(query_text)
 
     return avg_pooling_vec
 
 
-def get_pooling_results(query_tokens, model_vectors, method):
-    query_method_pooling_vec = method(query_tokens, model_vectors)
+def get_pooling_results(query_text, model, method):
+    '''
+    Get the pooling results for the given tokens,
+    according to the given model and method.
 
-    verse_scores, index = [], 0
+    @param query_text: list of words
+    @type query_text: list
+    @param model: the model to use
+    @type model: Word2Vec or KeyedVectors
+    @param method: the method to use
+    @type method: function
+    @return: most similar verses
+    @rtype: list of tuples (score, verse_id, verse)
+    '''
+
+    query_text = tokenize(clean_word(query_text))
+    query_method_pooling_vec = method(query_text, model)
+
+    verse_scores, verse_id = [], 0
     for verse in quran_clean_text:
-        verse_method_pooling_vec = method(verse.split(), model_vectors)
+        verse_method_pooling_vec = method(verse, model)
         cosine_similarity = np.dot(query_method_pooling_vec, verse_method_pooling_vec) / (
             np.linalg.norm(query_method_pooling_vec) * np.linalg.norm(verse_method_pooling_vec))
 
         # score = model_vectors.similarity(query_max_pooling_vec, verse_max_pooling_vec)
         # will fail, because we generated new vectors that doesn't belong to any model
 
-        verse_scores.append((cosine_similarity, index))
-        index += 1
+        verse_scores.append((cosine_similarity, verse_id))
+        verse_id += 1
 
     verse_scores.sort(reverse=True)
 
-    # TODO: check max length of verses_scores
-    most_similar_verses = [(score, quran_clean_text[index])
-                           for score, index in verse_scores[:10]]
+    # Return at most 50 verses
+    max_out_length = min(len(verse_scores), 50)
+    most_similar_verses = [(score, verse_id, quran_clean_text[verse_id])
+                           for score, verse_id in verse_scores[:max_out_length]]
 
     return most_similar_verses
