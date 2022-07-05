@@ -9,7 +9,7 @@ app.config["JSON_AS_ASCII"] = False
 api = Api(app)
 
 # routes to apis 
-api.add_resource(MostSimilarWord, '/similar-word/<string:word>')
+# api.add_resource(MostSimilarWord, '/similar-word/<string:word>')
 api.add_resource(MostSimilarVerse, '/similar-verse/<string:query>')
 
 
