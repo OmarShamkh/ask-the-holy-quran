@@ -2,7 +2,7 @@ from flask import jsonify, make_response
 from flask_restful import Resource
 from gensim.models import KeyedVectors, Word2Vec
 from .preprocess import get_quran_clean_text
-from .maximizing_methods import *
+from .maximizing_methods import * 
 from .pooling import *
 
 model_ksucca = KeyedVectors.load("./references/model.pkl")
@@ -27,7 +27,7 @@ class MostSimilarWord(Resource):
         word_scores = []
         for verse in quran_clean_text:
             for word in verse.split():
-                if word not in model_ksucca:
+                if word not in model_tw:
                     score = model_tw.similarity(word, verse)
                     word_scores.append((score, word))
         word_scores.sort(reverse=True)
@@ -47,6 +47,12 @@ class MostSimilarVerse(Resource):
         @return: props of the most similar verses from the Holy Quran
         @rtype: list of tuples (score, verse_id, verse)
         '''
+        
+        results = get_most_similar_verses_by_query_text(query, model_tw , get_verse_max_score)
 
-        out = get_pooling_results(query, model_tw, get_max_pooling_vec)
-        return make_response(jsonify({'results': out}), 200)
+        # Fixing: TypeError(Object of type float32 is not JSON serializable)
+        for idx, (score, verse_id, verse) in enumerate(results):
+            tmp = (float(score), verse_id , verse)
+            results[idx] = tmp
+
+        return make_response(jsonify({'results': results}), 200)

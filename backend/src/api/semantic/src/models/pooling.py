@@ -21,7 +21,7 @@ def get_max_pooling_vec(query_text, model):
     arr = [-1e9 for idx in range(100)]
     # Avoid read-only error
     max_pooling_vec = np.copy(np.array(arr))
-
+    
     for query_word in query_text:
         if query_word not in model:
             continue

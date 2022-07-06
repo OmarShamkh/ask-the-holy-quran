@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 # semantic/src/models/predict.py
-from src.models.predict import MostSimilarWord, MostSimilarVerse
+from src.models.predict import MostSimilarWord , MostSimilarVerse
 
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
@@ -9,7 +9,7 @@ app.config["JSON_AS_ASCII"] = False
 api = Api(app)
 
 # routes to apis 
-# api.add_resource(MostSimilarWord, '/similar-word/<string:word>')
+api.add_resource(MostSimilarWord, '/similar-word/<string:word>')
 api.add_resource(MostSimilarVerse, '/similar-verse/<string:query>')
 
 

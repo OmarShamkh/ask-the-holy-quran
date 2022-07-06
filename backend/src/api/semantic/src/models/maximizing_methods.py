@@ -2,9 +2,10 @@ from gensim.models import KeyedVectors, Word2Vec
 from pyarabic.araby import tokenize
 from .preprocess import clean_word, get_quran_clean_text
 
-model_ksucca = KeyedVectors.load("./references/model.pkl")
+# model_ksucca = KeyedVectors.load("./references/model.pkl")
+model_ksucca = KeyedVectors.load_word2vec_format('./data/processed/ksucca_full_cbow.bin', binary=True)
 model_tw = Word2Vec.load('./references/full_grams_cbow_100_twitter.mdl').wv
-model_wiki = Word2Vec.load('./references/full_grams_cbow_100_wiki.mdl').wv
+model_wiki = Word2Vec.load('./references/full_grams_cbow_100_wiki.mdl').wv 
 
 quran_clean_text = get_quran_clean_text()
 
@@ -38,7 +39,7 @@ def get_verse_max_score(query_word, verse_text, model):
             continue
         score = model.similarity(query_word, verse_word)
         maxi = max(score, maxi)
-
+    
     return max(0.0, maxi)
 
 
