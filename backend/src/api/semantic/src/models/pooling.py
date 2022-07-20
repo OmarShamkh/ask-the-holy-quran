@@ -49,16 +49,19 @@ def get_avg_pooling_vec(query_text, model):
     arr = [0 for idx in range(100)]
     # Avoid read-only error
     avg_pooling_vec = np.copy(np.array(arr))
-
+    
+    words_cnt = 0
     for query_word in query_text:
         if query_word not in model:
             continue
+            
+        words_cnt += 1
         model_vec = model[query_word]
         for index in range(100):
             avg_pooling_vec[index] += model_vec[index]
 
     for index in range(100):
-        avg_pooling_vec[index] /= len(query_text)
+        avg_pooling_vec[index] /= max(1, words_cnt) # Avoid zero division
 
     return avg_pooling_vec
 
