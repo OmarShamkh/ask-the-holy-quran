@@ -1,0 +1,2 @@
+class Aya < ApplicationRecord
+end

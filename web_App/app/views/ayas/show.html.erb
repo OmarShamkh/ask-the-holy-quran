@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @aya.content %>
+</p>
+
+<p>
+  <strong>Text:</strong>
+  <%= return @aya.text unless nil%>
+</p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @aya.number %>
+</p>
+
+<%= link_to 'Edit', edit_aya_path(@aya) %> |
+<%= link_to 'Back', ayas_path %>

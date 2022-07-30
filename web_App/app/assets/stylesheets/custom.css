@@ -1,0 +1,77 @@
+.boxy{
+    font-family: UthmanicHafs important;
+    direction: rtl;
+
+}
+
+.d-flex{
+        font-family: UthmanicHafs important;
+        font-family: UthmanicHafs;
+        top: 50px;
+        position: fixed;
+        width:100%;
+        background-color:rgb(239, 239, 245);
+        display: flex;  
+        justify-content: center;  
+        align-items: center;   
+
+}
+
+.table{
+    font-family: UthmanicHafs;
+    direction: rtl;
+
+     background-color:rgb(248, 248, 251); 
+   
+
+}
+
+
+.navbarr{
+    position:sticky;
+    top:.01px;
+    bottom: 0;
+    right: 0;
+    width:100%;
+    
+}
+
+  .space{
+    height: 30px;
+    display:grid;
+    text-align: center;
+
+    margin-top: 40px;
+    margin-bottom: 0px;
+    padding-bottom: 0%;
+
+
+}
+
+/* .aya{
+    font-family: UthmanicHafs important;
+    background-color:rgb(248, 248, 251);
+
+
+} */
+
+.form-control{
+    width: 40%;
+    background-color:rgb(239, 239, 245);
+    border-color: #198754;
+    direction: rtl;
+
+     
+}
+
+
+
+.suraLink{
+    float: left;
+}
+
+.button{
+    display: flex;  
+    justify-content:space-evenly;
+}
+
