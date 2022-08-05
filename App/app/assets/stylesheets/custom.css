@@ -1,0 +1,163 @@
+.boxy{
+    /* font-family: UthmanicHafs important; */
+    direction: rtl;
+    font-family: 'Amiri', serif;
+}
+
+.d-flex{
+        
+        top: 70px;
+        position: fixed;
+        width:100%;
+        background-color:rgb(239, 239, 245);
+        display: flex;  
+        align-items: center; 
+        direction: rtl;
+        justify-content:center;
+        font-family: 'Amiri', serif;
+
+
+}
+
+.btn{
+    margin-left:10px;
+    margin-right:10px;
+    border-radius:20px;
+    background-color:#1A1A4C;
+    color:white;
+    border-color:#1A1A4C ;
+    height:42px;
+    font-family: 'Amiri', serif;
+
+
+}
+
+.table{
+    font-family: 'Amiri', serif;
+    font-size:20px;
+    direction: rtl;
+    font-weight: 1000;
+     background-color:rgb(248, 248, 251); 
+   
+
+}
+
+
+.navbarr{
+    position:sticky;
+    top:.01px;
+    bottom: 0;
+    right: 0;
+    width:100%;
+    
+}
+
+  .space{
+    height: 30px;
+    display:grid;
+    text-align: center;
+
+    margin-top: 40px;
+    margin-bottom: 0px;
+    padding-bottom: 0%;
+    font-family: 'Amiri', serif;
+    font-size: 18px;
+    font-weight: 1000;
+
+
+}
+
+/* .aya{
+    font-family: UthmanicHafs important;
+    background-color:rgb(248, 248, 251);
+
+
+} */
+
+.table tr { 
+    border-bottom: 1px solid #cbcbcb; 
+    line-height: 60px;
+    
+}
+
+
+
+.form-control{
+    width: 40%;
+    background-color:rgb(239, 239, 245);
+    border-color: #198754;
+    direction: rtl;
+    font-family: 'Amiri', serif;
+    border-color:#1A1A4C ;
+    border-radius: 20px;
+
+
+     
+}
+
+
+
+.suraLink{
+    float: left;
+    text-decoration: none; 
+    color: rgb(4, 14, 57);
+}
+
+
+.button{
+    display: flex;  
+    justify-content:space-evenly;
+}
+
+input[type="text"]::placeholder {            
+    text-align: right;
+} 
+
+.btn-space { 
+    margin-right: 7px;
+} 
+
+.searchbar { 
+    direction: rtl;
+} 
+
+.nav-link{ 
+    color: inherit; 
+    width: 70px; 
+    height: 60px;  
+} 
+
+.nav-main { 
+    text-decoration: none; 
+    color: black;
+    
+}
+.navbar{
+    display: flex;  
+    align-items: center; 
+    direction: rtl;
+    /* justify-content: space-around; */
+    font-size: 25px;
+    font-family: 'Amiri', serif;
+    text-decoration: none;}
+
+    .btn:hover  {
+        background-color: #353575;
+        
+      }
+
+      .aya{
+        font-family: 'Amiri', serif;
+        font-size: 20px;
+        direction: rtl;
+        font-weight: 1000;
+        background-color:rgb(248, 248, 251); 
+        }
+
+        .nav-main{
+            margin-right: 150px;
+          }
+          
+          .nav-link{
+            margin-left: 140px;
+          }

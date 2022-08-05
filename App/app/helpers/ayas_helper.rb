@@ -1,0 +1,2 @@
+module AyasHelper
+end

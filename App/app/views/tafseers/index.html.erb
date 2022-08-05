@@ -1,0 +1,25 @@
+
+    
+    
+
+    <%= render 'search/form' %>
+
+        <table class="table "  >
+    
+    <thead>
+        
+    </thead>
+    
+    <div class="space" ></div>
+    <tbody  class="aya" >
+       
+            <tr>
+               <% @tafseers.each do |tafser| %>
+                    <div class="aya"><%= tafser.tafser %><br><br></div>
+               <%end%>
+            </tr>
+    
+          
+    </tbody>
+    
+</table>

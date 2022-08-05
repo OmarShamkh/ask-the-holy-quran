@@ -1,0 +1,63 @@
+    <div class="navbarr">
+        <nav class="navbar navbar-light bg-light" >
+            <%= link_to 'سَل القرآن', root_path, class: 'nav-main'  %>
+            <a href=<%= root_path %>>
+                <%= image_tag 'quran.png',  class: 'nav-link' %>
+            </a>
+        </nav>
+    </div>
+    
+    <%= render 'search/form' %> 
+    <% if params[:lexical_type] == "بحث باللفظ" %>
+        <table class="table "  >
+            
+            <thead>
+                
+            </thead>
+            
+            <div class="space" >  من النتائج <%= @counter %></div>
+            <tbody  class="aya" >
+                <% @ayas.each do |aya| %>
+                    <tr>
+                        <% if aya != nil %>
+                            <div class="aya"><td > <%= aya.text + " (#{Chapter.find(aya.chapter_id).name} #{aya.aya_number}:#{aya.chapter_id})" %>  <a href="<%= tafseer_path(aya.id) %>" class='suraLink'>تفسير الآية</a></td></div>
+                        <% end %>
+                    </tr>
+                <% end %>
+                
+            </tbody>
+            
+        </table>
+
+        <div class="button">
+            <%== pagy_bootstrap_nav(@pagy) %>
+        </div>
+
+
+    <% else %>
+
+        <table class="table "  >
+            
+            <thead>
+                
+            </thead>
+            
+            <div class="space" > من النتائج <%= @counter %></div>
+            <tbody  class="aya" >
+                <% @ayas.each do |aya| %>
+                    <tr>
+                        <% if aya != nil %>
+                            <div class="aya"><td > <%= aya.text + " (#{Chapter.find(aya.chapter_id).name} #{aya.aya_number}:#{aya.chapter_id})" %> <a href="<%= tafseer_path(aya.id)%>" class='suraLink'> تفسير الآية</a></td></div>
+                        <% end %>
+                    </tr>
+                <% end %>
+                
+            </tbody>
+            
+        </table>
+
+
+
+    <% end %>
+
+

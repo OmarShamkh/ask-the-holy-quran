@@ -1,0 +1,2 @@
+class Tafseer < ApplicationRecord
+end

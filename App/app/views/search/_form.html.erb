@@ -1,0 +1,6 @@
+ <div class="centerForm"><%=search_form_for(@query , url: search_path , method: :get , class:'d-flex') do |f|  %>
+    <%= f.search_field :content_or_text_cont , placeholder: "عن ماذا تبحث!..", class:"form-control me-2" %>
+    <%= f.submit "lexical", name: "lexical_type", value: "بحث باللفظ", class:"btn btn-outline-success" %>
+    <%= f.submit "semantic", name: "semantic_type", value: "بحث بالمعنى", class:"btn btn-outline-success" %>
+<% end %>
+</div>

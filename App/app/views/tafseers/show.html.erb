@@ -1,0 +1,29 @@
+<div class="navbarr">
+    <nav class="navbar navbar-light bg-light" >
+    <%= link_to 'سَل القرآن', root_path, class: 'nav-main'  %>
+    <a href=<%= root_path %>>
+        <%= image_tag 'quran.png',  class: 'nav-link' %>
+    </a>
+    </nav>
+</div>
+    <%= render 'search/form' %>
+
+        <table class="table "  >
+    
+    <thead>
+        
+    </thead>
+    
+    <div class="space" ></div>
+    <tbody  class="aya" >
+       
+            <tr>
+               
+                    <div class="aya"><td ><%= @tafser.tafser %></td></div>
+               
+            </tr>
+    
+          
+    </tbody>
+    
+</table>
