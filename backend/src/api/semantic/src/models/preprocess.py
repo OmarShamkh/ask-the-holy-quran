@@ -16,7 +16,6 @@ def clean_word(word):
   @rtype: str
   '''
 
-
   arabic_punctuations = '''`÷×؛<>_()*&^%][ـ،/:"؟.,'{}~¦+|!”…“–ـ'''
   english_punctuations = punctuation
   punctuations_list = arabic_punctuations + english_punctuations
@@ -44,6 +43,8 @@ def clean_word(word):
   
   word = word.strip()
   return word
+  
+
   
 def get_quran_clean_text():
   '''

@@ -3,7 +3,7 @@ from pyarabic.araby import tokenize
 import numpy as np
 
 quran_clean_text = get_quran_clean_text()
-
+vec_size = 300
 
 def get_max_pooling_vec(query_text, model):
     '''
@@ -18,7 +18,7 @@ def get_max_pooling_vec(query_text, model):
     '''
 
     # Warning: checkout the shape of the vectors
-    arr = [-1e9 for idx in range(100)]
+    arr = [-1e9 for idx in range(vec_size)]
     # Avoid read-only error
     max_pooling_vec = np.copy(np.array(arr))
     
@@ -26,7 +26,7 @@ def get_max_pooling_vec(query_text, model):
         if query_word not in model:
             continue
         model_vec = model[query_word]
-        for index in range(100):
+        for index in range(vec_size):
             max_pooling_vec[index] = max(
                 max_pooling_vec[index], model_vec[index])
 
@@ -34,19 +34,9 @@ def get_max_pooling_vec(query_text, model):
 
 
 def get_avg_pooling_vec(query_text, model):
-    '''
-    Get the average pooling vector for the given tokens.
-
-    @param query_text: list of words
-    @type query_text: list
-    @param model: the model to use
-    @type model: Word2Vec or KeyedVectors
-    @return: average pooling vector
-    @rtype: numpy array
-    '''
 
     # Warning: checkout the shape of the vectors
-    arr = [0 for idx in range(100)]
+    arr = [0 for idx in range(vec_size)]
     # Avoid read-only error
     avg_pooling_vec = np.copy(np.array(arr))
     
@@ -57,30 +47,22 @@ def get_avg_pooling_vec(query_text, model):
             
         words_cnt += 1
         model_vec = model[query_word]
-        for index in range(100):
+        for index in range(vec_size):
             avg_pooling_vec[index] += model_vec[index]
 
+<<<<<<< HEAD
     for index in range(100):
         avg_pooling_vec[index] /= max(1, words_cnt) # Avoid zero division
+=======
+    for index in range(vec_size):
+        avg_pooling_vec[index] /= len(query_text)
+>>>>>>> 4fdd1ca (update code)
 
     return avg_pooling_vec
 
 
 def get_pooling_results(query_text, model, method):
-    '''
-    Get the pooling results for the given tokens,
-    according to the given model and method.
-
-    @param query_text: list of words
-    @type query_text: list
-    @param model: the model to use
-    @type model: Word2Vec or KeyedVectors
-    @param method: the method to use
-    @type method: function
-    @return: most similar verses
-    @rtype: list of tuples (score, verse_id, verse)
-    '''
-
+    
     query_text = tokenize(clean_word(query_text))
     query_method_pooling_vec = method(query_text, model)
 

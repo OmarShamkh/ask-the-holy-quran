@@ -3,9 +3,12 @@ from pyarabic.araby import tokenize
 from .preprocess import clean_word, get_quran_clean_text
 
 # model_ksucca = KeyedVectors.load("./references/model.pkl")
+
+
 model_ksucca = KeyedVectors.load_word2vec_format('./data/processed/ksucca_full_cbow.bin', binary=True)
-model_tw = Word2Vec.load('./references/full_grams_cbow_100_twitter.mdl').wv
-model_wiki = Word2Vec.load('./references/full_grams_cbow_100_wiki.mdl').wv 
+model_tw = Word2Vec.load('./references/full_grams_cbow_300_twitter.mdl').wv
+model_wiki = Word2Vec.load('./references/full_grams_cbow_300_wiki.mdl').wv 
+
 
 quran_clean_text = get_quran_clean_text()
 
@@ -46,7 +49,7 @@ def get_verse_max_score(query_word, verse_text, model):
 def get_verse_frequency_score(query_word, verse_text, model):
     '''
     Get the frequency of a query word in a verse with:
-    the similarity score higher than 0.3, the more frequent the word is in the verse.
+    the similarity score higher than 0.4, the more frequent the word is in the verse.
 
     Example:
     >>> query_word = "الصلاة"
@@ -68,7 +71,7 @@ def get_verse_frequency_score(query_word, verse_text, model):
         if query_word not in model or verse_word not in model:
             continue
         score = model.similarity(query_word, verse_word)
-        if score > 0.3:
+        if score >= 0.4:
             freq += 1
 
     return freq
@@ -153,35 +156,11 @@ def get_most_similar_verses(query_word, model, method):
 
 
 def get_most_similar_verses_by_query_text(query_text, model, method):
-    '''
-    Get the most similar verses to a query text,
-    according to one model and one of the 3 maximizing methods (max, freq, avg).
-
-    Example:
-    >>> query_text = "مثوى الكافرين"
-    >>> get_most_similar_verses_by_query_text(query_text, model_ksucca, get_verse_avg_score)[:5]
-    [(0.5610717423260212, 5504, 'علي الكافرين غير يسير'),
-     (0.47719616691271466, 2332, 'الم تر انا ارسلنا الشياطين علي الكافرين تؤزهم ازا'),
-     (0.4661228557427724, 4043, 'الا ابليس استكبر وكان من الكافرين'),
-     (0.4329271502792835, 5947, 'فمهل الكافرين امهلهم رويدا'),
-     (0.42426673509180546, 1177, 'ذلكم وان الله موهن كيد الكافرين')]
-
-    @param query_text: query text (one or more words)
-    @type query_text: str (arabic unicode)
-    @param model: the pretrained model to use
-    @type model: KeyedVectors or Word2Vec
-    @param method: the maximizing method to use
-    @type method: function
-    @return: most similar verses
-    @rtype: list of tuples (score, verse_id, verse_text)
-    '''
-
+    
     # Generalized and better than the split method
     query_text = tokenize(query_text)
-
     # Feature: Comparing a query word of one 'صلاة' or two concatenated words 'صلاة_القيام',
     # with a verse word of one or two concatenated words
-
     verse2score = {}
     for i in range(len(query_text)):
         most_similar_verses1 = get_most_similar_verses(
@@ -255,16 +234,6 @@ def get_combined_models_results(query_text, method):
 
 
 def get_all_combined(query_text):
-    '''
-    Get the most similar verses to a query text,
-    based on combining all models with all maximizing methods.
-
-    @param query_text: query text (one or more words)
-    @type query_text: str (arabic unicode)
-    @return: most similar verses
-    @rtype: list of tuples (score, verse_id, verse_text)
-    '''
-
     methods = [get_combined_models_results(query_text, get_verse_max_score),
                get_combined_models_results(
                    query_text, get_verse_frequency_score),
