@@ -41,7 +41,7 @@ require 'json'
   def find_verse(words)
     query = CGI.escape("#{words}")  
     mb = request_api(
-      "http://192.168.1.8:5000/similar-verse/#{query}"
+      "https://quran-semantic-api.icycliff-d2b823f1.eastus.azurecontainerapps.io/similar-verse/#{query}"
     ) 
     results = mb["results"]  
     apiresults = []
